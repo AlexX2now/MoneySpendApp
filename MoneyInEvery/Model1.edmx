@@ -1,0 +1,514 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище BankModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BankAccount$">
+          <Key>
+            <PropertyRef Name="NumberAccount" />
+          </Key>
+          <Property Name="NumberAccount" Type="float" Nullable="false" />
+          <Property Name="DateOpen" Type="date" />
+          <Property Name="Balance" Type="float" />
+          <Property Name="Type" Type="int" />
+        </EntityType>
+        <EntityType Name="Contract$">
+          <Key>
+            <PropertyRef Name="IDContract" />
+          </Key>
+          <Property Name="IDContract" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NumberAccount" Type="float" />
+          <Property Name="IDUser" Type="int" />
+          <Property Name="Amount" Type="float" />
+          <Property Name="Period" Type="int" />
+          <Property Name="ExpirationDate" Type="date" />
+          <Property Name="Percet" Type="float" />
+        </EntityType>
+        <EntityType Name="History$">
+          <Key>
+            <PropertyRef Name="IDOperation" />
+          </Key>
+          <Property Name="IDOperation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeOperation" Type="int" />
+          <Property Name="DateTime" Type="datetime" />
+          <Property Name="Amount" Type="float" />
+          <Property Name="NumberAccount" Type="float" />
+        </EntityType>
+        <EntityType Name="Passport$">
+          <Key>
+            <PropertyRef Name="Number_Series" />
+          </Key>
+          <Property Name="Number_Series" Type="float" Nullable="false" />
+          <Property Name="Adress" Type="nvarchar" MaxLength="100" />
+          <Property Name="DateOfIssue" Type="date" />
+          <Property Name="Issued" Type="nvarchar" MaxLength="100" />
+          <Property Name="DateOfBirth" Type="date" />
+          <Property Name="PlaceOfBirth" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Type$">
+          <Key>
+            <PropertyRef Name="IDType" />
+          </Key>
+          <Property Name="IDType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameType" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TypeOperation$">
+          <Key>
+            <PropertyRef Name="IDTypeOperation" />
+          </Key>
+          <Property Name="IDTypeOperation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameOperation" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="User$">
+          <Key>
+            <PropertyRef Name="IDUser" />
+          </Key>
+          <Property Name="IDUser" Type="int" Nullable="false" />
+          <Property Name="Login" Type="float" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" />
+          <Property Name="Patronymic" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="float" />
+          <Property Name="E-Mail" Type="nvarchar" MaxLength="50" />
+          <Property Name="Number_Series" Type="float" />
+        </EntityType>
+        <Association Name="FK_BankAccount$_Type$">
+          <End Role="Type$" Type="Self.Type$" Multiplicity="0..1" />
+          <End Role="BankAccount$" Type="Self.BankAccount$" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type$">
+              <PropertyRef Name="IDType" />
+            </Principal>
+            <Dependent Role="BankAccount$">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract$_BankAccount$">
+          <End Role="BankAccount$" Type="Self.BankAccount$" Multiplicity="0..1" />
+          <End Role="Contract$" Type="Self.Contract$" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BankAccount$">
+              <PropertyRef Name="NumberAccount" />
+            </Principal>
+            <Dependent Role="Contract$">
+              <PropertyRef Name="NumberAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract$_User$">
+          <End Role="User$" Type="Self.User$" Multiplicity="0..1" />
+          <End Role="Contract$" Type="Self.Contract$" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User$">
+              <PropertyRef Name="IDUser" />
+            </Principal>
+            <Dependent Role="Contract$">
+              <PropertyRef Name="IDUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_History$_BankAccount$">
+          <End Role="BankAccount$" Type="Self.BankAccount$" Multiplicity="0..1" />
+          <End Role="History$" Type="Self.History$" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BankAccount$">
+              <PropertyRef Name="NumberAccount" />
+            </Principal>
+            <Dependent Role="History$">
+              <PropertyRef Name="NumberAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_History$_TypeOperation$">
+          <End Role="TypeOperation$" Type="Self.TypeOperation$" Multiplicity="0..1" />
+          <End Role="History$" Type="Self.History$" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeOperation$">
+              <PropertyRef Name="IDTypeOperation" />
+            </Principal>
+            <Dependent Role="History$">
+              <PropertyRef Name="TypeOperation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User$_Passport$">
+          <End Role="Passport$" Type="Self.Passport$" Multiplicity="0..1" />
+          <End Role="User$" Type="Self.User$" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Passport$">
+              <PropertyRef Name="Number_Series" />
+            </Principal>
+            <Dependent Role="User$">
+              <PropertyRef Name="Number_Series" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище BankModelContainer">
+          <EntitySet Name="BankAccount$" EntityType="Self.BankAccount$" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contract$" EntityType="Self.Contract$" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="History$" EntityType="Self.History$" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Passport$" EntityType="Self.Passport$" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Type$" EntityType="Self.Type$" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeOperation$" EntityType="Self.TypeOperation$" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User$" EntityType="Self.User$" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_BankAccount$_Type$" Association="Self.FK_BankAccount$_Type$">
+            <End Role="Type$" EntitySet="Type$" />
+            <End Role="BankAccount$" EntitySet="BankAccount$" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract$_BankAccount$" Association="Self.FK_Contract$_BankAccount$">
+            <End Role="BankAccount$" EntitySet="BankAccount$" />
+            <End Role="Contract$" EntitySet="Contract$" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract$_User$" Association="Self.FK_Contract$_User$">
+            <End Role="User$" EntitySet="User$" />
+            <End Role="Contract$" EntitySet="Contract$" />
+          </AssociationSet>
+          <AssociationSet Name="FK_History$_BankAccount$" Association="Self.FK_History$_BankAccount$">
+            <End Role="BankAccount$" EntitySet="BankAccount$" />
+            <End Role="History$" EntitySet="History$" />
+          </AssociationSet>
+          <AssociationSet Name="FK_History$_TypeOperation$" Association="Self.FK_History$_TypeOperation$">
+            <End Role="TypeOperation$" EntitySet="TypeOperation$" />
+            <End Role="History$" EntitySet="History$" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User$_Passport$" Association="Self.FK_User$_Passport$">
+            <End Role="Passport$" EntitySet="Passport$" />
+            <End Role="User$" EntitySet="User$" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BankModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BankAccount_">
+          <Key>
+            <PropertyRef Name="NumberAccount" />
+          </Key>
+          <Property Name="NumberAccount" Type="Double" Nullable="false" />
+          <Property Name="DateOpen" Type="DateTime" Precision="0" />
+          <Property Name="Balance" Type="Double" />
+          <Property Name="Type" Type="Int32" />
+          <NavigationProperty Name="Type_" Relationship="Self.FK_BankAccount__Type_" FromRole="BankAccount_" ToRole="Type_" />
+          <NavigationProperty Name="Contract_" Relationship="Self.FK_Contract__BankAccount_" FromRole="BankAccount_" ToRole="Contract_" />
+          <NavigationProperty Name="History_" Relationship="Self.FK_History__BankAccount_" FromRole="BankAccount_" ToRole="History_" />
+        </EntityType>
+        <EntityType Name="Contract_">
+          <Key>
+            <PropertyRef Name="IDContract" />
+          </Key>
+          <Property Name="IDContract" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumberAccount" Type="Double" />
+          <Property Name="IDUser" Type="Int32" />
+          <Property Name="Amount" Type="Double" />
+          <Property Name="Period" Type="Int32" />
+          <Property Name="ExpirationDate" Type="DateTime" Precision="0" />
+          <Property Name="Percet" Type="Double" />
+          <NavigationProperty Name="BankAccount_" Relationship="Self.FK_Contract__BankAccount_" FromRole="Contract_" ToRole="BankAccount_" />
+          <NavigationProperty Name="User_" Relationship="Self.FK_Contract__User_" FromRole="Contract_" ToRole="User_" />
+        </EntityType>
+        <EntityType Name="History_">
+          <Key>
+            <PropertyRef Name="IDOperation" />
+          </Key>
+          <Property Name="IDOperation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeOperation" Type="Int32" />
+          <Property Name="DateTime" Type="DateTime" Precision="3" />
+          <Property Name="Amount" Type="Double" />
+          <Property Name="NumberAccount" Type="Double" />
+          <NavigationProperty Name="BankAccount_" Relationship="Self.FK_History__BankAccount_" FromRole="History_" ToRole="BankAccount_" />
+          <NavigationProperty Name="TypeOperation_" Relationship="Self.FK_History__TypeOperation_" FromRole="History_" ToRole="TypeOperation_" />
+        </EntityType>
+        <EntityType Name="Passport_">
+          <Key>
+            <PropertyRef Name="Number_Series" />
+          </Key>
+          <Property Name="Number_Series" Type="Double" Nullable="false" />
+          <Property Name="Adress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfIssue" Type="DateTime" Precision="0" />
+          <Property Name="Issued" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="PlaceOfBirth" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User_" Relationship="Self.FK_User__Passport_" FromRole="Passport_" ToRole="User_" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Type_">
+          <Key>
+            <PropertyRef Name="IDType" />
+          </Key>
+          <Property Name="IDType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BankAccount_" Relationship="Self.FK_BankAccount__Type_" FromRole="Type_" ToRole="BankAccount_" />
+        </EntityType>
+        <EntityType Name="TypeOperation_">
+          <Key>
+            <PropertyRef Name="IDTypeOperation" />
+          </Key>
+          <Property Name="IDTypeOperation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameOperation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="History_" Relationship="Self.FK_History__TypeOperation_" FromRole="TypeOperation_" ToRole="History_" />
+        </EntityType>
+        <EntityType Name="User_">
+          <Key>
+            <PropertyRef Name="IDUser" />
+          </Key>
+          <Property Name="IDUser" Type="Int32" Nullable="false" />
+          <Property Name="Login" Type="Double" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="Double" />
+          <Property Name="E_Mail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Number_Series" Type="Double" />
+          <NavigationProperty Name="Contract_" Relationship="Self.FK_Contract__User_" FromRole="User_" ToRole="Contract_" />
+          <NavigationProperty Name="Passport_" Relationship="Self.FK_User__Passport_" FromRole="User_" ToRole="Passport_" />
+        </EntityType>
+        <Association Name="FK_BankAccount__Type_">
+          <End Role="Type_" Type="Self.Type_" Multiplicity="0..1" />
+          <End Role="BankAccount_" Type="Self.BankAccount_" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type_">
+              <PropertyRef Name="IDType" />
+            </Principal>
+            <Dependent Role="BankAccount_">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract__BankAccount_">
+          <End Role="BankAccount_" Type="Self.BankAccount_" Multiplicity="0..1" />
+          <End Role="Contract_" Type="Self.Contract_" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BankAccount_">
+              <PropertyRef Name="NumberAccount" />
+            </Principal>
+            <Dependent Role="Contract_">
+              <PropertyRef Name="NumberAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_History__BankAccount_">
+          <End Role="BankAccount_" Type="Self.BankAccount_" Multiplicity="0..1" />
+          <End Role="History_" Type="Self.History_" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BankAccount_">
+              <PropertyRef Name="NumberAccount" />
+            </Principal>
+            <Dependent Role="History_">
+              <PropertyRef Name="NumberAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract__User_">
+          <End Role="User_" Type="Self.User_" Multiplicity="0..1" />
+          <End Role="Contract_" Type="Self.Contract_" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_">
+              <PropertyRef Name="IDUser" />
+            </Principal>
+            <Dependent Role="Contract_">
+              <PropertyRef Name="IDUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_History__TypeOperation_">
+          <End Role="TypeOperation_" Type="Self.TypeOperation_" Multiplicity="0..1" />
+          <End Role="History_" Type="Self.History_" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeOperation_">
+              <PropertyRef Name="IDTypeOperation" />
+            </Principal>
+            <Dependent Role="History_">
+              <PropertyRef Name="TypeOperation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User__Passport_">
+          <End Role="Passport_" Type="Self.Passport_" Multiplicity="0..1" />
+          <End Role="User_" Type="Self.User_" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Passport_">
+              <PropertyRef Name="Number_Series" />
+            </Principal>
+            <Dependent Role="User_">
+              <PropertyRef Name="Number_Series" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BankEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BankAccount_" EntityType="Self.BankAccount_" />
+          <EntitySet Name="Contract_" EntityType="Self.Contract_" />
+          <EntitySet Name="History_" EntityType="Self.History_" />
+          <EntitySet Name="Passport_" EntityType="Self.Passport_" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Type_" EntityType="Self.Type_" />
+          <EntitySet Name="TypeOperation_" EntityType="Self.TypeOperation_" />
+          <EntitySet Name="User_" EntityType="Self.User_" />
+          <AssociationSet Name="FK_BankAccount__Type_" Association="Self.FK_BankAccount__Type_">
+            <End Role="Type_" EntitySet="Type_" />
+            <End Role="BankAccount_" EntitySet="BankAccount_" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract__BankAccount_" Association="Self.FK_Contract__BankAccount_">
+            <End Role="BankAccount_" EntitySet="BankAccount_" />
+            <End Role="Contract_" EntitySet="Contract_" />
+          </AssociationSet>
+          <AssociationSet Name="FK_History__BankAccount_" Association="Self.FK_History__BankAccount_">
+            <End Role="BankAccount_" EntitySet="BankAccount_" />
+            <End Role="History_" EntitySet="History_" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract__User_" Association="Self.FK_Contract__User_">
+            <End Role="User_" EntitySet="User_" />
+            <End Role="Contract_" EntitySet="Contract_" />
+          </AssociationSet>
+          <AssociationSet Name="FK_History__TypeOperation_" Association="Self.FK_History__TypeOperation_">
+            <End Role="TypeOperation_" EntitySet="TypeOperation_" />
+            <End Role="History_" EntitySet="History_" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User__Passport_" Association="Self.FK_User__Passport_">
+            <End Role="Passport_" EntitySet="Passport_" />
+            <End Role="User_" EntitySet="User_" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище BankModelContainer" CdmEntityContainer="BankEntities">
+          <EntitySetMapping Name="BankAccount_">
+            <EntityTypeMapping TypeName="BankModel.BankAccount_">
+              <MappingFragment StoreEntitySet="BankAccount$">
+                <ScalarProperty Name="NumberAccount" ColumnName="NumberAccount" />
+                <ScalarProperty Name="DateOpen" ColumnName="DateOpen" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contract_">
+            <EntityTypeMapping TypeName="BankModel.Contract_">
+              <MappingFragment StoreEntitySet="Contract$">
+                <ScalarProperty Name="IDContract" ColumnName="IDContract" />
+                <ScalarProperty Name="NumberAccount" ColumnName="NumberAccount" />
+                <ScalarProperty Name="IDUser" ColumnName="IDUser" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+                <ScalarProperty Name="Percet" ColumnName="Percet" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="History_">
+            <EntityTypeMapping TypeName="BankModel.History_">
+              <MappingFragment StoreEntitySet="History$">
+                <ScalarProperty Name="IDOperation" ColumnName="IDOperation" />
+                <ScalarProperty Name="TypeOperation" ColumnName="TypeOperation" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="NumberAccount" ColumnName="NumberAccount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Passport_">
+            <EntityTypeMapping TypeName="BankModel.Passport_">
+              <MappingFragment StoreEntitySet="Passport$">
+                <ScalarProperty Name="Number_Series" ColumnName="Number_Series" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+                <ScalarProperty Name="DateOfIssue" ColumnName="DateOfIssue" />
+                <ScalarProperty Name="Issued" ColumnName="Issued" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="PlaceOfBirth" ColumnName="PlaceOfBirth" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="BankModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Type_">
+            <EntityTypeMapping TypeName="BankModel.Type_">
+              <MappingFragment StoreEntitySet="Type$">
+                <ScalarProperty Name="IDType" ColumnName="IDType" />
+                <ScalarProperty Name="NameType" ColumnName="NameType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeOperation_">
+            <EntityTypeMapping TypeName="BankModel.TypeOperation_">
+              <MappingFragment StoreEntitySet="TypeOperation$">
+                <ScalarProperty Name="IDTypeOperation" ColumnName="IDTypeOperation" />
+                <ScalarProperty Name="NameOperation" ColumnName="NameOperation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_">
+            <EntityTypeMapping TypeName="BankModel.User_">
+              <MappingFragment StoreEntitySet="User$">
+                <ScalarProperty Name="IDUser" ColumnName="IDUser" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="E_Mail" ColumnName="E-Mail" />
+                <ScalarProperty Name="Number_Series" ColumnName="Number_Series" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

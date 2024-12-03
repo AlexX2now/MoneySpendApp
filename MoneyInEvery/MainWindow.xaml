@@ -1,0 +1,54 @@
+﻿<Window x:Class="MoneyInEvery.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MoneyInEvery"
+        mc:Ignorable="d"
+        Icon="pack://application:,,,/images/icon.png"
+        Title="Информация" Height="600" Width="900">
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="500,25,0,0" TextWrapping="Wrap" Text="Деньги в каждый карман" VerticalAlignment="Top" FontFamily="Calibri" FontSize="25"/>
+        <Image Height="60" Margin="745,10,10,0" VerticalAlignment="Top" Source="/Icon.png"/>
+        <Grid Margin="40,84,610,150" Background="#FFDEEBF7">
+            <Grid.Effect>
+                <DropShadowEffect Color="#FFDEEBF7" RenderingBias="Quality" BlurRadius="60" Direction="360"/>
+            </Grid.Effect>
+            <TextBlock Text="Стабильный" FontFamily="Calibri" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,30,0,0"/>
+            <TextBlock Text="Без пополнения    
+Без снятия              
+Без капитализации
+" FontFamily="Calibri" FontSize="17" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,90,0,0" Width="156" TextWrapping="Wrap" TextAlignment="Center"/>
+            <TextBlock Text="Минимальный срок от 3 месяцев" FontFamily="Calibri" FontSize="17" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,190,0,0" Width="156" TextWrapping="Wrap" TextAlignment="Center"/>
+            <TextBlock Text="8% годовых" FontFamily="Calibri" FontSize="37" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,249,0,0" Width="200" TextWrapping="Wrap" TextAlignment="Center" Foreground="#FF1B3150" FontWeight="Bold"/>
+        </Grid>
+        <Grid Margin="325,84,325,150" Background="#FFDEEBF7">
+            <Grid.Effect>
+                <DropShadowEffect Color="#FFDEEBF7" RenderingBias="Quality" BlurRadius="60" Direction="360"/>
+            </Grid.Effect>
+            <TextBlock FontFamily="Calibri" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Top" Text="Оптимальный" Margin="0,30,0,0"/>
+            <TextBlock Text="Пополняемый                    
+Есть возможность снятия
+С капитализацией
+" FontFamily="Calibri" FontSize="17" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,90,0,0" Width="200" TextWrapping="Wrap" TextAlignment="Center"/>
+            <TextBlock Text="Минимальный срок от 6 месяцев" FontFamily="Calibri" FontSize="17" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,190,0,0" Width="156" TextWrapping="Wrap" TextAlignment="Center"/>
+            <TextBlock Text="5% годовых" FontFamily="Calibri" FontSize="37" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,249,0,0" Width="200" TextWrapping="Wrap" TextAlignment="Center" Foreground="#FF1B3150" FontWeight="Bold"/>
+        </Grid>
+
+        <Grid Margin="610,84,40,150" Background="#FFDEEBF7">
+            <Grid.Effect>
+                <DropShadowEffect Color="#FFDEEBF7" RenderingBias="Quality" BlurRadius="60" Direction="360"/>
+            </Grid.Effect>
+            <TextBlock FontFamily="Calibri" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Top" Text="Стандарт" Margin="0,30,0,0"/>
+            <TextBlock Text="Пополняемый        
+Без снятия              
+Без капитализации
+" FontFamily="Calibri" FontSize="17" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,90,0,0" Width="156" TextWrapping="Wrap" TextAlignment="Center"/>
+
+            <TextBlock Text="Минимальный срок от 3 месяцев" FontFamily="Calibri" FontSize="17" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,190,0,0" Width="156" TextWrapping="Wrap" TextAlignment="Center"/>
+            <TextBlock Text="6% годовых" FontFamily="Calibri" FontSize="37" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,249,0,0" Width="200" TextWrapping="Wrap" TextAlignment="Center" Foreground="#FF1B3150" FontWeight="Bold"/>
+        </Grid>
+        <Button x:Name="tocalc" Content="Расчитать доход" HorizontalAlignment="Center" Margin="0,480,0,0" VerticalAlignment="Top" Height="44" Width="320" Foreground="White" FontFamily="Calibri" FontSize="25" Background="#FF2C7DE0" Click="tocalc_Click"/>
+
+    </Grid>
+</Window>
